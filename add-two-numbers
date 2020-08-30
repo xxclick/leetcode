@@ -1,0 +1,50 @@
+给出两个 非空 的链表用来表示两个非负的整数。其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储 一位 数字。
+
+如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。
+
+您可以假设除了数字 0 之外，这两个数都不会以 0 开头。
+
+示例：
+
+输入：(2 -> 4 -> 3) + (5 -> 6 -> 4)
+输出：7 -> 0 -> 8
+原因：342 + 465 = 807
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+ 
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+           ListNode result = new ListNode(0);
+        ListNode curResult = result;
+        ListNode cur1 = l1, cur2 = l2;
+        int curSum = 0;
+        while (cur1 != null || cur2 != null) {
+            curSum = getSumVal(cur1, cur2) + curSum / 10;
+            curResult.val = curSum % 10;
+            curResult.next = new ListNode(0);
+
+            // 向下遍历
+            curResult = curResult.next;
+            cur1 = cur1.next;
+            cur2 = cur2.next;
+        }
+
+        if (curSum / 10 == 1) {
+            curResult.val = 1;
+        } else {
+            curResult = null;
+        }
+        return result;
+    }
+
+    public static int getSumVal(ListNode l1, ListNode l2) {
+        return (l1 != null ? l1.val : 0) + (l2 != null ? l2.val : 0);
+    }
+}
