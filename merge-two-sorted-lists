@@ -1,0 +1,53 @@
+将两个升序链表合并为一个新的 升序 链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。 
+
+ 
+
+示例：
+
+输入：1->2->4, 1->3->4
+输出：1->1->2->3->4->4
+
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+         if (l1 == null && l2 == null) {
+            return null;
+        }
+        ListNode cur = new ListNode(0);
+        ListNode result = new ListNode(0);
+        result.next = cur;
+        while (l1 != null && l2 != null) {
+            if (l1.val < l2.val) {
+                cur.val = l1.val;
+                l1 = l1.next;
+            } else {
+                cur.val = l2.val;
+                l2 = l2.next;
+            }
+            cur.next = new ListNode(0);
+            cur = cur.next;
+        }
+
+        if (l1 != null) {
+            cur.val = l1.val;
+            cur.next = l1.next;
+        } else if (l2 != null) {
+            cur.val = l2.val;
+            cur.next = l2.next;
+        } else {
+            cur = null;
+        }
+        
+        return result.next;
+    }
+}
